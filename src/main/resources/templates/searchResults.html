@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Wyniki wyszukiwania</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Wyniki wyszukiwania</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nazwa książki</th>
+            <th>Ocena</th>
+            <th>Dostępność</th>
+            <th>Cena</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${matchingBooks}">
+            <td th:text="${book.getName()}"></td>
+            <td th:text="${book.getStars()}"></td>
+            <td th:text="${book.getInStock()}"></td>
+            <td th:text="${book.getPrice()}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-primary" href="/">Powrót do strony głównej</a>
+</div>
+</body>
+</html>

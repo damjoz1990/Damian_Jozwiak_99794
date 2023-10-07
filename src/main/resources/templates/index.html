@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BookClub</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/main.css" th:href="@{/css/main.css}"/>
+    <script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
+</head>
+<body>
+<header>
+    <a href="#" th:href="@{/}" class="logo">BookClub</a>
+    <!-- Informacje o zalogowanym użytkowniku -->
+    <div th:if="${#authorization.expression('isAuthenticated()')}" class="user-info">
+        <p><span th:text="${#authentication.name}" ></span></p>
+    </div>
+    <a class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+    <nav class="topnav" id="myLinks">
+        <a href="#" th:href="@{/genres-book}" sec:authorize="isAuthenticated()">Książki</a>
+        <a href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">Zaloguj się</a>
+        <a href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj się</a>
+        <a href="#" th:href="@{/admin}" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">Panel Administracyjny</a>
+    </nav>
+</header>
+
+<main sec:authorize="!isAuthenticated()">
+    <!-- Obraz  -->
+    <div class="container mt-5">
+        <img src="/static/image-1.jpg" th:src="@{/image-1.jpg}">
+        <div class="text-overlay">
+            <h1>Witaj w BookClub!</h1>
+            <p>Znajdź i odkryj fascynujące książki z nami.</p>
+            <br>
+            <br>
+            <br>
+
+            <!-- Wyświetlanie książek -->
+            <div class="book-list">
+                <h2>Losowe Propozycje!</h2>
+                <ul>
+                    <!-- Pętla po książkach w Thymeleaf -->
+                    <li th:each="book : ${books}">
+                        <h3 th:text="${book.getName()}"></h3>
+                        <p th:text="'Ocena: ' + ${book.getStars()}"></p>
+                        <p th:text="${book.getGenre().getName()}"></p>
+                        <!-- Dodaj inne informacje o książkach -->
+                    </li>
+                    <!-- Koniec pętli -->
+                </ul>
+            </div>
+            <!-- Koniec wyświetlania książek w Thymeleaf -->
+        </div>
+    </div>
+</main>
+<main sec:authorize="isAuthenticated()">
+    <br>
+    <br>
+    <br>
+    <div class="container mt-5">
+        <h1 class="mb-4" >Generowanie pliku CSV</h1>
+        <p>Generuj plik CSV z danymi o książkach.</p>
+        <form action="/csv/download" method="get">
+            <button type="submit" class="btn btn-primary">Generuj CSV</button>
+        </form>
+    </div>
+    <!-- Formularz wyszukiwania książek -->
+    <div class="search-books container mt-5">
+        <h1 class="mb-4">Wyszukaj książki</h1>
+        <form action="/search" method="get">
+            <div class="input-group mb-3">
+                <input type="text" name="searchQuery" class="form-control" placeholder="Wpisz część nazwy książki" required>
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Szukaj</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="mb-4">Top 10 Książek</h1>
+        <p>Przeglądaj listę top 10 najlepiej ocenianych książek.</p>
+        <button class="btn btn-primary" onclick="window.location.href='/top10Books'">Przejdź do Top 10</button>
+    </div>
+</main>
+</body>
+</html>

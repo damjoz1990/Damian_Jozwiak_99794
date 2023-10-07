@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BookClub</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/main.css" th:href="@{/css/main.css}"/>
+    <script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
+</head>
+<body>
+<header>
+    <a href="#" th:href="@{/}" class="logo">BookClub</a>
+    <!-- Informacje o zalogowanym użytkowniku -->
+    <div th:if="${#authorization.expression('isAuthenticated()')}" class="user-info">
+        <p><span th:text="${#authentication.name}"></span></p>
+    </div>
+    <a class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+    <nav class="topnav" id="myLinks">
+        <a href="#" th:href="@{/genres-book}" sec:authorize="isAuthenticated()">Książki</a>
+        <a href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">Zaloguj się</a>
+        <a href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj się</a>
+        <a href="#" th:href="@{/admin}" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">Panel Administracyjny</a>
+    </nav>
+</header>
+<main class="d-flex justify-content-center align-items-center vh-100">
+    <div class="main-content">
+        <div class="container">
+            <h2 class="list-heading">Zarejestruj się</h2>
+            <form action="#" th:action="@{/rejestracja}" method="post" class="mc-form" th:object="${user}">
+                <div class="form-group">
+                    <label for="email">Adres email</label>
+                    <input id="email" type="email" class="form-control" placeholder="nazwa użytkownika"
+                           th:field="*{email}">
+                </div>
+                <div class="form-group">
+                    <label for="password">Hasło</label>
+                    <input id="password" class="form-control" placeholder="hasło" type="password"
+                           th:field="*{password}">
+                </div>
+                <button type="submit" class="btn btn-primary">Zarejestruj się</button>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

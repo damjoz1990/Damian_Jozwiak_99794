@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/static/css/main.css" th:href="@{/css/main.css}"/>
+    <script defer src="../static/scripts/common.js" th:src="@{/scripts/common.js}"></script>
+    <title>Dodaj Książkę - BookClub</title>
+</head>
+<body>
+<header>
+    <a href="#" th:href="@{/}" class="logo">BookClub</a>
+    <a class="icon" onclick="myFunction()">
+        <i class="fa fa-bars"></i>
+    </a>
+    <nav class="topnav" id="myLinks">
+        <a href="#" th:href="@{/genres-book}" sec:authorize="isAuthenticated()">Książki</a>
+        <a href="#" th:href="@{/login}" sec:authorize="!isAuthenticated()">Zaloguj się</a>
+        <a href="#" th:href="@{/logout}" sec:authorize="isAuthenticated()">Wyloguj się</a>
+        <a href="#" th:href="@{/admin}" sec:authorize="hasAnyAuthority('ADMIN')">Panel Administracyjny</a>
+    </nav>
+</header>
+
+<div class="image">
+    <img src="/static/image-1.jpg" th:src="@{/image-1.jpg}">
+</div>
+
+<main class="text-overlay">
+    <h2 class="list-heading">Dodaj nową książkę</h2>
+    <form th:action="@{/admin/dodaj-ksiazke}" method="post" enctype="multipart/form-data" th:object="${book}" >
+        <table>
+            <tr>
+                <td><label for="title">Tytuł</label></td>
+                <td><input type="text" id="title" name="name" placeholder="Tytuł książki" required></td>
+            </tr>
+            <tr>
+                <select id="genre" th:field="*{genre}" required>
+                    <option value="" hidden>Wybierz gatunek</option>
+                    <option th:each="genre: ${genres}" th:value="${genre.name}" th:text="${genre.getName()}"></option>
+                </select>
+            </tr>
+            <tr>
+                <td><label for="price">Cena</label></td>
+                <td><input type="text" id="price" name="price" placeholder="Cena książki" required></td>
+            </tr>
+            <tr>
+                <td><label for="stock">Ilość w magazynie</label></td>
+                <td><input type="text" id="stock" name="stock" placeholder="Ilość dostępnych egzemplarzy" required></td>
+            </tr>
+        </table>
+        <button type="submit">Dodaj książkę</button>
+    </form>
+</main>
+
+</body>
+</html>
