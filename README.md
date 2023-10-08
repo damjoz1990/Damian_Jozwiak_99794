@@ -78,7 +78,7 @@ To run the project:
 ## Acknowledgments
 - **Społeczna Akademia Nauk:** I am deeply thankful to Społeczna Akademia Nauk for providing the necessary academic support and resources that have been invaluable in bringing this project to fruition.
 
-- **Dr. Konrad Grzańka:** I extend my heartfelt thanks to Dr. Konrad Grzanek for his exceptional guidance, expertise, and unwavering support throughout the journey of this project. His mentorship has been truly inspirational.
+- **Dr. Konrad Grzanek:** I extend my heartfelt thanks to Dr. Konrad Grzanek for his exceptional guidance, expertise, and unwavering support throughout the journey of this project. His mentorship has been truly inspirational.
 
 ## Contact
 Created by damjoz1990@gmail.com - feel free to contact me!
